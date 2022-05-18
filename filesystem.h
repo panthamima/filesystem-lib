@@ -47,9 +47,13 @@
 /* 
 /* All functions returns unsigned value (1, 2, 3, ...) if the action is completed successfully
 /*            and 0 if there was some kind of error
-/*
+/**/
 
 //----------------------------------------------------------------------------------//
+
+#define READ "r"
+#define APPEND "a"
+#define TRUNC "w"
 
 /* представляет собой путь */
 int path_fls();
@@ -88,7 +92,7 @@ int weakly_canonical_path();
 /* копирует файлы или катологи */
 int copy();
 /* копирует содержимое файла */
-int copy_file();
+int copy_file(const char* input_file, size_t buf_size, const char* output_file, ...);
 /* копирует символическую ссылку */
 int copy_symlink();
 /* создает новый католог/катологи */
@@ -120,7 +124,7 @@ int remove_file(const char* file);
 /* рекурсивно удаляет файл или католог и все его содержимое */
 int remove_all();
 /* перемещает или переименовывает файл или католог */
-int rename();
+int rename_file(const char* old, const char* );
 /* изменяет размер обычного файла путем усечения или заполнением нулями */
 int resize_file();
 /* определяет доступное свободное место в файловой системе */

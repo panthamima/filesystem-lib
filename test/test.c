@@ -29,17 +29,9 @@ int check_file() {
 }
 
 int main() {
-    // check_file();
-    // char file[] = "/home/user/work/filesystem_libc/aboba.tt";
-    char file[] = "/etc/passwd";
-    // if(status_known(file)) {
-    //     printf("heloo");
-    // };
-    if(remove_file(file) == 1) {
-        printf("beeee");
-    } 
-    // if(is_empty(file)) {
+    char in[] = "filesystem.c";
+    char out[] = "out.txt";
 
-    // }
+    copy_file(in, 1024, out);
+
 }
-

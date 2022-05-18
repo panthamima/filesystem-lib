@@ -1,13 +1,13 @@
 #include "filesystem.h"
+#include <dirent.h>
+#include <fcntl.h>
 #include <stdio.h>
 
-#ifdef FLS_OS_LINUX
-char path_s[PATH_MAX];
-#elif  FLS_OS_WINDOWS
-char path[MAX_PATH];
-#endif//fls_os_linux
-
-#define _XOPEN_SOURCE
+// #ifdef FLS_OS_LINUX
+// char path_s[PATH_MAX];
+// #elif  FLS_OS_WINDOWS
+// char path[MAX_PATH];
+// #endif//fls_os_linux
 
 /* представляет собой путь */
 int path_fls() {
@@ -26,7 +26,9 @@ int file_status() {}
 /* информация о свободном и доступном пространстве в файловой системе */
 int space_info() {}
 /* тип файла */
-int file_type() {}
+int file_type() {
+
+}
 /* определяет разрешения файловой системы */
 int perms() {}
 /* определяет семантику операций с разрешениями */
@@ -48,7 +50,27 @@ int weakly_canonical_path() {}
 /* копирует файлы или катологи */
 int copy() {}
 /* копирует содержимое файла */
-int copy_file() {}
+int copy_file(const char* input_file, size_t buf_size, const char* output_file, ...) {
+    FILE *in, *out;
+    char swap[buf_size];
+    printf("addaads");
+    if((fopen(input_file, "r")) == NULL) { 
+        printf("error in\n");
+        return FLS_ERROR;
+    }
+    if((fopen(output_file, APPEND)) == NULL) {
+        printf("error out\n");
+        return FLS_ERROR;
+    }
+
+    while(fgets(swap, buf_size, in)) {
+        fputs(swap, out);
+    }
+    fclose(in);
+    fclose(out);
+    puts("addaads");
+    return FLS_SUCCESS;
+}
 /* копирует символическую ссылку */
 int copy_symlink() {}
 /* создает новый католог/катологи */
@@ -78,22 +100,31 @@ int read_symlink() {}
 /* удаляет файл или пустой католог */
 int remove_file(const char* file) {
     if(!remove(file)) {
-        printf("hello\n");
         return FLS_SUCCESS;
     }
-    printf("bye\n");
     return FLS_ERROR;
 }
 /* рекурсивно удаляет файл или католог и все его содержимое */
-int remove_all() {}
+int remove_all(const char* path) {
+    DIR *dir;
+    struct dirent dir_s;
+
+    opendir(path);
+
+}
 /* перемещает или переименовывает файл или католог */
 int rename_file(const char* old, const char* new) {
-    rename(old, new);
+    if(!rename(old, new)) {
+        return FLS_SUCCESS;
+    }
+    return FLS_ERROR;
 }
 /* изменяет размер обычного файла путем усечения или заполнением нулями */
 int resize_file() {}
 /* определяет доступное свободное место в файловой системе */
-int space() {}
+int space() {
+
+}
 /* определяет атрибуты файла */
 int status() {}
 /* определяет атрибуты файла, проверяя цель символической ссылки */
@@ -117,15 +148,8 @@ int is_block_file(const char* file) {
 }
 /* проверяет, ссылается ли данный путь на католог */
 int is_directory(const char* file) {
-    struct stat state;
-    if(lstat(file, &state) < 0) {
-        return FLS_ERROR;
-    }
-
-    if(S_ISDIR(state.st_mode)) {
-            printf("sdfsdf ");
-
-        return DIRECTORY_FILE;
+    if(open(file, O_DIRECTORY)) {
+        return FLS_SUCCESS;
     }
     return FLS_ERROR;
 }
@@ -172,6 +196,7 @@ int is_socket(const char* file) {
 //     }
 //     return FLS_ERROR;
 // }
+
 /* проверяет, ссылается ли данный путь на символьное устройство */
 int is_character_file(const char* file) {
     struct stat state;
