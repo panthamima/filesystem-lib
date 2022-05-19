@@ -32,9 +32,6 @@ int main() {
     char in[] = "filesystem.c";
     char out[] = "out.txt";
     
-    if(status_known(in) == REGULAR_FILE) {
-	printf("here\n");	    
-    };
-    copy_file(in, 1024, out);
+    copy_file(in, 2, out);
 
 }

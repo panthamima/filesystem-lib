@@ -21,7 +21,7 @@
 
 #ifdef FLS_OS_WINDOWS
 #include <windows.h>
-// additional includes
+/* additional includes */
 #include <shellapi.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -44,10 +44,10 @@
 #include <string.h>
 #include <stdio.h>
 
-/* 
-/* All functions returns unsigned value (1, 2, 3, ...) if the action is completed successfully
-/*            and 0 if there was some kind of error
-/**/
+/*                                                                                                   */
+/*   All functions returns unsigned value (1, 2, 3, ...) if the action is completed successfully     */
+/*                       and 0 if there was some kind of error                                       */
+/*                                                                                                   */
 
 //----------------------------------------------------------------------------------//
 
