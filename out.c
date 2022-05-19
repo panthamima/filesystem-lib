@@ -2,7 +2,6 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <string.h>
 
 // #ifdef FLS_OS_LINUX
 // char path_s[PATH_MAX];
@@ -48,15 +47,13 @@ int absolute_path() {}
 /* составляет канонический путь */
 int canonical_path() {}
 int weakly_canonical_path() {}
-/* копирует файл или католог */
-int copy_s() {
-    
-}
+/* копирует файлы или катологи */
+int copy() {}
 /* копирует содержимое файла */
 int copy_file(const char* input_file, size_t buf_size, const char* output_file, ...) {
     FILE *in, *out;
     char swap[buf_size];
-
+    printf("addaads");
     if((in = fopen(input_file, READ)) == NULL) { 
         printf("error in\n");
         return FLS_ERROR;
@@ -74,15 +71,13 @@ int copy_file(const char* input_file, size_t buf_size, const char* output_file, 
     }
     fclose(in);
     fclose(out);
+    puts("addaads");
     return FLS_SUCCESS;
 }
 /* копирует символическую ссылку */
 int copy_symlink() {}
 /* создает новый католог/катологи */
-int create_directory(const char* file, size_t len) {
-    char mkdir[len];
-    strcat(mkdir, file);
-}
+int create_directory() {}
 int create_directories() {}
 /* создает жесткую ссылку */
 int create_hard_link() {}
