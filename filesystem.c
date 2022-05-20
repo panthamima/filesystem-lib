@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
 
 // #ifdef FLS_OS_LINUX
 // char path_s[PATH_MAX];
@@ -79,9 +80,22 @@ int copy_file(const char* input_file, size_t buf_size, const char* output_file, 
 /* копирует символическую ссылку */
 int copy_symlink() {}
 /* создает новый католог/катологи */
-int create_directory(const char* file, size_t len) {
-    char mkdir[len];
-    strcat(mkdir, file);
+int create_directory(char* file, size_t len, const int roots) {
+    char buffer[len];
+
+    #ifdef FLS_OS_LINUX
+
+    if(mkdir(file, roots)) {
+        printf("bebebe");
+        return 1;
+    }
+
+    printf("lalala");
+    return 2;
+    #elif FLS_OS_WINDOWS
+
+    #endif
+
 }
 int create_directories() {}
 /* создает жесткую ссылку */

@@ -1,4 +1,5 @@
 #include "../filesystem.h"
+#include <string.h>
 
 int check_file() {
     char path[4096] = "/";
@@ -29,9 +30,9 @@ int check_file() {
 }
 
 int main() {
-    char in[] = "filesystem.c";
-    char out[] = "out.txt";
-    
-    copy_file(in, 2, out);
-
+    // char in[] = "filesystem.c";
+    // char out[] = "out.txt";
+    char dir[] = "/home/user/beba";
+    // copy_file(in, 2, out);
+    create_directory(dir, 700);
 }
