@@ -96,7 +96,7 @@ int copy_file(const char* input_file, size_t buf_size, const char* output_file, 
 /* копирует символическую ссылку */
 int copy_symlink();
 /* создает новый католог/катологи */
-int create_directory();
+int create_directory(char* file, size_t len, const int roots);
 int create_directories();
 /* создает жесткую ссылку */
 int create_hard_link();
@@ -106,7 +106,7 @@ int create_directory_symlink();
 /* возвращяет или устанавливает текущий рабочий каталог */
 int current_path();
 /* проверяет, ссылается ли путь на существующий объект файловой системы */
-int exists();
+int exists(const char* file);
 /* проверяет, ссылаются ли два пути на один и тот же объект файловой системы */
 int equivalent();
 /* возвращает размер файла */
@@ -122,7 +122,7 @@ int read_symlink();
 /* удаляет файл или пустой католог */
 int remove_file(const char* file);
 /* рекурсивно удаляет файл или католог и все его содержимое */
-int remove_all();
+int remove_all(const char* path);
 /* перемещает или переименовывает файл или католог */
 int rename_file(const char* old, const char* );
 /* изменяет размер обычного файла путем усечения или заполнением нулями */
@@ -144,12 +144,13 @@ int temp_directory_path();
 #define BLOCK_FILE 1
 #define FIFO_FILE 2
 #define SOCKET_FILE 3
-#define OTHER_FILE 4
+#define UNKNOWN_FILE 4
 #define DIRECTORY_FILE 5
 #define REGULAR_FILE 6
 #define CHAR_FILE 7
 #define SYMLINK_FILE 8
 #define EMPTY_FILE 9
+#define FILE_EXISTS 10
 
 /* проверяет, ссылается ли данный путь на блочное устройство */
 #if defined(S_ISBLK)
@@ -189,8 +190,10 @@ int status_known(const char* file);
 //----------------------------------------------------------------------------------//
                                 /* my functions */
 
-
-
+/* if mode == hidden(show . and ..) else without . and .. */
+int show_all_files_in_directory(const char* path, const int mode);
+/* рекурсивно копирует все файлы из директории */
+int copy_all_files_in_derectory_in_other_directory(const char* old_path, const char* new_path, const int mode);
 
 
 

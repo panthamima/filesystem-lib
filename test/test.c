@@ -29,10 +29,36 @@ int check_file() {
     return 1;
 }
 
+/* complete functions */
+/* copy_file */
+/* create_directory */
+/* exists */
+/* remove_file --- no-leaks*/
+/* remove_all --- NOT FINISHED*/
+/* rename_file --- no-leaks*/
+/* is_***_file func's --- no-leaks ???*/
+/* is_empty --- NOT FINISHED*/
+/* status_known */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+
 int main() {
     // char in[] = "filesystem.c";
     // char out[] = "out.txt";
-    char dir[] = "/home/user/beba";
+    char dir[] = "/home/user";
+    char new_dir[] = "/home/user/asd";
     // copy_file(in, 2, out);
-    create_directory(dir, 700);
+    // create_directory(dir, 777);
+    if(exists(new_dir)) {
+        // printf("sdasd");
+        // return 1;
+    }
+    // printf("asdasdasdasdasda");
+    // return 0;
+    remove_all(new_dir);
 }

@@ -84,8 +84,11 @@ int create_directory(char* file, size_t len, const int roots) {
     char buffer[len];
 
     #ifdef FLS_OS_LINUX
+    if(is_directory(file)) {
 
-    if(mkdir(file, roots)) {
+    }
+
+    if(mkdir(file, roots) > 0) {
         printf("bebebe");
         return 1;
     }
@@ -106,7 +109,16 @@ int create_directory_symlink() {}
 /* возвращяет или устанавливает текущий рабочий каталог */
 int current_path() {}
 /* проверяет, ссылается ли путь на существующий объект файловой системы */
-int exists() {}
+int exists(const char* file) {
+    FILE *stream;
+
+    if ((stream = fopen(file, READ)) != NULL) {
+        fclose(stream);
+        return FILE_EXISTS;
+    }
+    fclose(stream);
+    return FLS_ERROR;
+}
 /* проверяет, ссылаются ли два пути на один и тот же объект файловой системы */
 int equivalent() {}
 /* возвращает размер файла */
@@ -128,11 +140,17 @@ int remove_file(const char* file) {
 }
 /* рекурсивно удаляет файл или католог и все его содержимое */
 int remove_all(const char* path) {
-    DIR *dir;
-    struct dirent dir_s;
+    DIR *dir_s;
+    struct dirent *dir;
+    dir_s = opendir(path);
 
-    opendir(path);
+    while((dir = readdir(dir_s)) != NULL) {
+        printf("%s\n", dir->d_name);
+        remove_file(dir->d_name);
+    }
 
+    closedir(dir_s);
+    return FLS_SUCCESS;
 }
 /* перемещает или переименовывает файл или католог */
 int rename_file(const char* old, const char* new) {
