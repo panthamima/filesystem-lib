@@ -84,8 +84,8 @@ int create_directory(char* file, size_t len, const int roots) {
     char buffer[len];
 
     #ifdef FLS_OS_LINUX
-    if(is_directory(file)) {
-
+    if(!is_directory(file)) {
+        return FLS_ERROR;
     }
 
     if(mkdir(file, roots) > 0) {

@@ -193,7 +193,7 @@ int status_known(const char* file);
 /* if mode == hidden(show . and ..) else without . and .. */
 int show_all_files_in_directory(const char* path, const int mode);
 /* рекурсивно копирует все файлы из директории */
-int copy_all_files_in_derectory_in_other_directory(const char* old_path, const char* new_path, const int mode);
+int copy_all_files_in_directory_in_other_directory(const char* old_path, const char* new_path, const int mode);
 
 
 
