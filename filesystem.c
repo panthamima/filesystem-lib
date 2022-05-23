@@ -1,6 +1,7 @@
 #include "filesystem.h"
 #include <dirent.h>
 #include <fcntl.h>
+#include <linux/limits.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -80,7 +81,7 @@ int copy_file(const char* input_file, size_t buf_size, const char* output_file, 
 /* копирует символическую ссылку */
 int copy_symlink() {}
 /* создает новый католог/катологи */
-int create_directory(char* path, const int roots) {
+int create_directory(const char* path, const int roots) {
     #ifdef FLS_OS_LINUX
     if(!mkdir(path, roots)) {
         return FLS_SUCCESS;
@@ -91,10 +92,21 @@ int create_directory(char* path, const int roots) {
     #endif
 
 }
-int create_directories(char* path, const int roots) {
+int create_directories(char* path, const size_t path_len, const int roots) {
     #ifdef FLS_OS_LINUX
-    
+    int i;
+    int count = 0;
+    char buffer[PATH_MAX];
 
+    for(i = 0; i < path_len; i++) {
+        printf("%c\n", *path);
+        *path++;
+        if(*path == '/') {
+            // printf("AAAAAA");
+            printf("%s\n %d", path, i);
+        }
+    }
+    // printf("%d", count);
 
     #elif FLS_OS_WINDOWS
 
@@ -107,7 +119,7 @@ int create_hard_link() {}
 /* создает символическую ссылку */
 int create_symlink() {}
 int create_directory_symlink() {}
-/* возвращяет или устанавливает текущий рабочий каталог */
+/* возвращает или устанавливает текущий рабочий каталог */
 int current_path() {}
 /* проверяет, ссылается ли путь на существующий объект файловой системы */
 int exists(const char* file) {
@@ -153,7 +165,7 @@ int remove_all(const char* path) {
     // (зна4ит они не удалились) соответсвтенно заходить в нее 
     // удалять проверять если остались еще директории продолжить ,
     // если нет то выйти и снова проверить на директории и так далее
-    // + тестануть джостко
+
     closedir(dir_s);
     return FLS_SUCCESS;
 }

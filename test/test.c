@@ -49,6 +49,8 @@ int check_file() {
 /*  */
 
 int main() {
-    // create_directory("asd", 0);    printf("NO");
+    char asd[] = "/home/panthamima/path/to/some/where";
+    create_directories(asd, sizeof(asd),0777);    
+    // printf("%ld", sizeof(asd));
 
 }

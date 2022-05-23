@@ -10,11 +10,9 @@
 // #define MAIN1
 // #define MAIN2
 // #define MAIN3
-// #define MAIN4
-#define MAIN5
+#define MAIN4
+// #define MAIN5
 
-namespace fs = std::experimental::filesystem;
-using std::endl;
 
 #ifdef MAIN1
 int main()
