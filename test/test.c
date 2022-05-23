@@ -50,11 +50,12 @@ int check_file() {
 int main() {
     // char in[] = "filesystem.c";
     // char out[] = "out.txt";
-    char dir[] = "/home/user";
+    char dir[] = "/home/rdwszzd/fullenz/";
     char new_dir[] = "/home/user/asd";
     // copy_file(in, 2, out);
     // create_directory(dir, 777);
     if(exists(new_dir)) {
+        rename_file(dir, new_dir);
         // printf("sdasd");
         // return 1;
     }
