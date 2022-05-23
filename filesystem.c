@@ -80,27 +80,28 @@ int copy_file(const char* input_file, size_t buf_size, const char* output_file, 
 /* копирует символическую ссылку */
 int copy_symlink() {}
 /* создает новый католог/катологи */
-int create_directory(char* file, size_t len, const int roots) {
-    char buffer[len];
-
+int create_directory(char* path, const int roots) {
     #ifdef FLS_OS_LINUX
-    if(!is_directory(file)) {
-        return FLS_ERROR;
+    if(!mkdir(path, roots)) {
+        return FLS_SUCCESS;
     }
-
-    if(mkdir(file, roots) > 0) {
-        printf("bebebe");
-        return 1;
-    }
-
-    printf("lalala");
-    return 2;
+    return FLS_ERROR;
     #elif FLS_OS_WINDOWS
 
     #endif
 
 }
-int create_directories() {}
+int create_directories(char* path, const int roots) {
+    #ifdef FLS_OS_LINUX
+    
+
+
+    #elif FLS_OS_WINDOWS
+
+    #endif
+    
+    return FLS_ERROR;
+}
 /* создает жесткую ссылку */
 int create_hard_link() {}
 /* создает символическую ссылку */
@@ -148,7 +149,11 @@ int remove_all(const char* path) {
         printf("%s\n", dir->d_name);
         remove_file(dir->d_name);
     }
-
+    // удалять все файлы проверять на существование директорий 
+    // (зна4ит они не удалились) соответсвтенно заходить в нее 
+    // удалять проверять если остались еще директории продолжить ,
+    // если нет то выйти и снова проверить на директории и так далее
+    // + тестануть джостко
     closedir(dir_s);
     return FLS_SUCCESS;
 }
