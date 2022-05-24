@@ -92,27 +92,34 @@ int create_directory(const char* path, const int roots) {
     #endif
 
 }
-int create_directories(char* path, const size_t path_len, const int roots) {
+int create_directories(char* path, const int roots) {
     #ifdef FLS_OS_LINUX
-    int i;
-    int count = 0;
-    char buffer[PATH_MAX];
+    unsigned int i = 0; 
+    size_t dir_create = 0;   /* number of directories created */
+    size_t err_dir_create = 0; /* number of errors when creating directories */
+    char buffer[PATH_MAX] = {};
+    
+    while(*path) {
+        buffer[i++] = *path;
 
-    for(i = 0; i < path_len; i++) {
-        printf("%c\n", *path);
-        *path++;
-        if(*path == '/') {
-            // printf("AAAAAA");
-            printf("%s\n %d", path, i);
+        if(*path++ == '/' || *path == '\0') {
+            dir_create += 1;
+
+            if((mkdir(buffer, roots) < 0)) {
+                err_dir_create += 1;
+            }
         }
     }
-    // printf("%d", count);
+
+    if(dir_create == err_dir_create) {
+        return FLS_ERROR;
+    }
+    return FLS_SUCCESS;
+
 
     #elif FLS_OS_WINDOWS
 
     #endif
-    
-    return FLS_ERROR;
 }
 /* создает жесткую ссылку */
 int create_hard_link() {}

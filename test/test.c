@@ -1,4 +1,5 @@
 #include "../filesystem.h"
+#include <endian.h>
 #include <string.h>
 
 int check_file() {
@@ -29,11 +30,22 @@ int check_file() {
     return 1;
 }
 
+void test_directory_create() {
+
+}
+
+void test_copy_file() {
+
+}
+
+void test_remove_file_and_all() {
+
+}
 /* complete functions */
 
 /* copy_file */
 /* create_directory */
-/* exists */
+/* file_exists */
 /* remove_file --- no-leaks*/
 /* remove_all --- NOT FINISHED*/
 /* rename_file --- no-leaks*/
@@ -49,8 +61,8 @@ int check_file() {
 /*  */
 
 int main() {
-    char asd[] = "/home/panthamima/path/to/some/where";
-    create_directories(asd, sizeof(asd),0777);    
+    char asd[] = "../../asdasd/asdasd";
+    create_directories(asd, 0777);    
     // printf("%ld", sizeof(asd));
-
+    
 }

@@ -97,7 +97,7 @@ int copy_file(const char* input_file, size_t buf_size, const char* output_file, 
 int copy_symlink();
 /* создает новый католог/катологи */
 int create_directory(const char* path, const int roots);
-int create_directories(char* path, const size_t path_len, const int roots);
+int create_directories(char* path, const int roots);
 /* создает жесткую ссылку */
 int create_hard_link();
 /* создает символическую ссылку */
@@ -106,7 +106,7 @@ int create_directory_symlink();
 /* возвращяет или устанавливает текущий рабочий каталог */
 int current_path();
 /* проверяет, ссылается ли путь на существующий объект файловой системы */
-int exists(const char* file);
+int file_exists(const char* file);
 /* проверяет, ссылаются ли два пути на один и тот же объект файловой системы */
 int equivalent();
 /* возвращает размер файла */
