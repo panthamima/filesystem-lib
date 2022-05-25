@@ -78,7 +78,7 @@ int copy_file(const char* input_file, size_t buf_size, const char* output_file, 
 }
 /* копирует символическую ссылку */
 int copy_symlink() {}
-/* создает новый католог/катологи */
+/* создает новый католог */
 int create_directory(const char* path, const int roots) {
     #ifdef FLS_OS_LINUX
     if(!mkdir(path, roots)) {
@@ -91,6 +91,7 @@ int create_directory(const char* path, const int roots) {
 
 }
 
+/* создает путь из нескольких катологов */
 int create_directories(char* path, const int roots) {
     #ifdef FLS_OS_LINUX
     unsigned int i = 0; 
@@ -135,7 +136,6 @@ int file_exists(const char* file) {
         fclose(stream);
         return FILE_EXISTS;
     }
-    // fclose(stream);
     return FLS_ERROR;
 }
 /* проверяет, ссылаются ли два пути на один и тот же объект файловой системы */
@@ -151,7 +151,7 @@ int permissions() {}
 /* получает цель символической ссылки */
 int read_symlink() {}
 /* удаляет файл или пустой католог */
-int remove_file(const char* file) {
+int remove_file (const char* file) {
     if(!remove(file)) {
         return FLS_SUCCESS;
     }
