@@ -41,6 +41,13 @@ void test_directories_create() {
     create_directories(hjk, 0);
 }
 
+void file_exists_test() {
+    file_exists("/home");
+    file_exists("/");
+    file_exists("file_test");
+    file_exists("../../Desktop");
+}
+
 void test_copy_file() {
     copy_file("file1", 128, "file2");
     remove_file("file1");
@@ -74,8 +81,5 @@ void test_remove_file_and_all() {
 
 int main() {
     // test_copy_file();
-    if(!file_exists("/home")) {
-        puts("sasasa");
-    }
-    puts("2e1231");
+
 }
