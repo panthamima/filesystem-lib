@@ -60,11 +60,9 @@ int copy_file(const char* input_file, size_t buf_size, const char* output_file, 
     char swap[buf_size];
 
     if((in = fopen(input_file, READ)) == NULL) { 
-        printf("error in\n");
         return FLS_ERROR;
     }
     if((out = fopen(output_file, APPEND)) == NULL) {
-        printf("error out\n");
         return FLS_ERROR;
     }
 
@@ -74,8 +72,8 @@ int copy_file(const char* input_file, size_t buf_size, const char* output_file, 
             break;
         }
     }
-    fclose(in);
     fclose(out);
+    fclose(in);
     return FLS_SUCCESS;
 }
 /* копирует символическую ссылку */
@@ -98,7 +96,7 @@ int create_directories(char* path, const int roots) {
     unsigned int i = 0; 
     size_t dir_create = 0;   /* number of directories created */
     size_t err_dir_create = 0; /* number of errors when creating directories */
-    char buffer[PATH_MAX] = {};
+    char buffer[PATH_MAX] = {0};
     
     while(*path) {
         buffer[i++] = *path;

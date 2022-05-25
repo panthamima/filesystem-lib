@@ -1,8 +1,9 @@
 #include "../filesystem.h"
-#include <endian.h>
-#include <string.h>
+#include <stdint.h>
 
-int check_file() {
+// #define UNIT_TESTS 
+#ifdef UNIT_TESTS
+void test_is_status_file() {
     char path[4096] = "/";
     if(is_block_file(path)) {
         printf("block\n");
@@ -27,18 +28,30 @@ int check_file() {
     // }
 
     printf("error\n");
-    return 1;
 }
 
 void test_directories_create() {
-    char asd[] = "../../popka_local/asdasd/asd3asc";
-    char qwe[] = "/home/rdwszzd/papka_in_koren/sad333a/a";
-    char qweqwe[] = "/home/rdwszzd/papka probel/asdasd";
-    char hjk[] = "asdasd/asdasd";
-    create_directories(asd, 0777);
-    create_directories(qwe, 0444);    
-    create_directories(qweqwe, 0111);
-    create_directories(hjk, 0);
+    uint8_t pass_count = 0;
+    if(create_directories("asdasd/asdasd", 0777)) {
+        pass_count++;
+    }
+    if(!create_directories("/papka probel/asdasd", 0744)) {
+        pass_count++;
+    }
+    if(create_directories("popka_local/asdasd/asd3asc", 0711)) {
+        pass_count++;
+    }
+    if(create_directories("papka_in_koren/sad333a/a", 0741)) {
+        pass_count++;
+    }
+
+    if(pass_count == 4) {
+        printf("[test_directories_create] all tests(4-4) passed\n");
+        return;
+    }
+    else {
+        printf("[test_directories_create] test failed\n");
+    }
 }
 
 void file_exists_test() {
@@ -57,6 +70,15 @@ void test_copy_file() {
 void test_remove_file_and_all() {
 
 }
+
+void test_check() {
+    test_copy_file();
+    test_directories_create();
+}
+
+#endif
+
+
 /* complete functions */
 
 /* copy_file --- no-leaks */
@@ -79,7 +101,9 @@ void test_remove_file_and_all() {
 
 
 
-int main() {
-    // test_copy_file();
 
+int main() {
+    if(is_empty("filesystem.c")) {
+        
+    }
 }
