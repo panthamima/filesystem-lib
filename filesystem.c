@@ -92,6 +92,7 @@ int create_directory(const char* path, const int roots) {
     #endif
 
 }
+
 int create_directories(char* path, const int roots) {
     #ifdef FLS_OS_LINUX
     unsigned int i = 0; 
@@ -129,14 +130,14 @@ int create_directory_symlink() {}
 /* возвращает или устанавливает текущий рабочий каталог */
 int current_path() {}
 /* проверяет, ссылается ли путь на существующий объект файловой системы */
-int exists(const char* file) {
+int file_exists(const char* file) {
     FILE *stream;
 
     if ((stream = fopen(file, READ)) != NULL) {
         fclose(stream);
         return FILE_EXISTS;
     }
-    fclose(stream);
+    // fclose(stream);
     return FLS_ERROR;
 }
 /* проверяет, ссылаются ли два пути на один и тот же объект файловой системы */

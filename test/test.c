@@ -30,12 +30,21 @@ int check_file() {
     return 1;
 }
 
-void test_directory_create() {
-
+void test_directories_create() {
+    char asd[] = "../../popka_local/asdasd/asd3asc";
+    char qwe[] = "/home/rdwszzd/papka_in_koren/sad333a/a";
+    char qweqwe[] = "/home/rdwszzd/papka probel/asdasd";
+    char hjk[] = "asdasd/asdasd";
+    create_directories(asd, 0777);
+    create_directories(qwe, 0444);    
+    create_directories(qweqwe, 0111);
+    create_directories(hjk, 0);
 }
 
 void test_copy_file() {
-
+    copy_file("file1", 128, "file2");
+    remove_file("file1");
+    remove_file("file2");
 }
 
 void test_remove_file_and_all() {
@@ -43,9 +52,10 @@ void test_remove_file_and_all() {
 }
 /* complete functions */
 
-/* copy_file */
+/* copy_file --- no-leaks */
 /* create_directory */
-/* file_exists */
+/* create_directories --- no-leaks */
+/* file_exists --- no-leaks*/
 /* remove_file --- no-leaks*/
 /* remove_all --- NOT FINISHED*/
 /* rename_file --- no-leaks*/
@@ -60,9 +70,12 @@ void test_remove_file_and_all() {
 /*  */
 /*  */
 
+
+
 int main() {
-    char asd[] = "../../asdasd/asdasd";
-    create_directories(asd, 0777);    
-    // printf("%ld", sizeof(asd));
-    
+    // test_copy_file();
+    if(!file_exists("/home")) {
+        puts("sasasa");
+    }
+    puts("2e1231");
 }
