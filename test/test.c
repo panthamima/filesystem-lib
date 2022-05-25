@@ -138,6 +138,15 @@ void test_remove_file_and_all() {
 
 }
 
+void test_is_empty() {
+    if(!is_empty("filesystem.c")) {
+        printf("bebera\n");
+    }
+    if(is_empty("testfile")) {
+        printf("amoguesa\n");
+    }
+}
+
 void test_check() {
     test_is_status_file();
     test_directories_create();
@@ -171,11 +180,11 @@ void test_check() {
 
 
 int main() {
-    remove_all("/home/panthamima/test_to_delete");
-    
+    // remove_all("/home/panthamima/test_to_delete");
         
     
     #ifdef UNIT_TESTS
     test_check();
+    test_is_empty();
     #endif
 }

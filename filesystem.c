@@ -13,47 +13,41 @@
 // #endif//fls_os_linux
 
 /* представляет собой путь */
-int path_fls() {
-    
-}
+int path_fls() { return 0; }
 /* исключение, вызванное ошибками файловой системы. */
-int filesystem_error() {}
+int filesystem_error() { return 0; }
 /* запись католога */
-int directory_entry() {}
+int directory_entry() { return 0; }
 /* итератор содержимого католога */
-int directory_iterator() {}
+int directory_iterator() { return 0; }
 /* итератор содержимого католога и его подкатологов */
-int recursive_directory_iterator() {}
+int recursive_directory_iterator() { return 0; }
 /* представляет тип и разрешения файла */
-int file_status() {}
+int file_status() { return 0; }
 /* информация о свободном и доступном пространстве в файловой системе */
-int space_info() {}
+int space_info() { return 0; }
 /* тип файла */
-int file_type() {
-
-}
+int file_type() { return 0; }
 /* определяет разрешения файловой системы */
-int perms() {}
+int perms() { return 0; }
 /* определяет семантику операций с разрешениями */
-int perm_options() {}
+int perm_options() { return 0; }
 /* определяет семантику операций копирования */
-int copy_options() {}
+int copy_options() { return 0; }
 /* опции для для итерации содержимого католога */
-int directory_options() {}
+int directory_options() { return 0; }
 /* опции для итерации содержимого католога */
-int file_time_type() {}
+int file_time_type() { return 0; }
 
 //----------------------------------------------------------------------------------//
 
 /* составляет абсолютный путь */
-int absolute_path() {}
+int absolute_path() { return 0; }
 /* составляет канонический путь */
-int canonical_path() {}
-int weakly_canonical_path() {}
+int canonical_path() { return 0; }
+int weakly_canonical_path() { return 0; }
 /* копирует файл или католог */
-int copy_s() {
-    
-}
+int copy_s() { return 0; }
 /* копирует содержимое файла */
 int copy_file(const char* input_file, size_t buf_size, const char* output_file, ...) {
     FILE *in, *out;
@@ -77,7 +71,7 @@ int copy_file(const char* input_file, size_t buf_size, const char* output_file, 
     return FLS_SUCCESS;
 }
 /* копирует символическую ссылку */
-int copy_symlink() {}
+int copy_symlink() { return 0; }
 /* создает новый католог */
 int create_directory(const char* path, const int roots) {
     #ifdef FLS_OS_LINUX
@@ -122,12 +116,12 @@ int create_directories(char* path, const int roots) {
     #endif
 }
 /* создает жесткую ссылку */
-int create_hard_link() {}
+int create_hard_link() { return 0; }
 /* создает символическую ссылку */
-int create_symlink() {}
-int create_directory_symlink() {}
+int create_symlink() { return 0; }
+int create_directory_symlink() { return 0; }
 /* возвращает или устанавливает текущий рабочий каталог */
-int current_path() {}
+int current_path() { return 0; }
 /* проверяет, ссылается ли путь на существующий объект файловой системы */
 int file_exists(const char* file) {
     FILE *stream;
@@ -139,17 +133,17 @@ int file_exists(const char* file) {
     return FLS_ERROR;
 }
 /* проверяет, ссылаются ли два пути на один и тот же объект файловой системы */
-int equivalent() {}
+int equivalent() { return 0; }
 /* возвращает размер файла */
-int file_size() {}
+int file_size() { return 0; }
 /* возвращяет число жестких ссылок на конкретный файл */
-int hard_link_count() {}
+int hard_link_count() { return 0; }
 /* получает или задает время последней модификации данных */
-int last_write_time() {}
+int last_write_time() { return 0; }
 /* получает права доступа к файлу */
-int permissions() {}
+int permissions() { return 0; }
 /* получает цель символической ссылки */
-int read_symlink() {}
+int read_symlink() { return 0; }
 /* удаляет файл или пустой католог */
 int remove_file (const char* file) {
     if(!remove(file)) {
@@ -183,17 +177,15 @@ int rename_file(const char* old, const char* new) {
     return FLS_ERROR;
 }
 /* изменяет размер обычного файла путем усечения или заполнением нулями */
-int resize_file() {}
+int resize_file() { return 0; }
 /* определяет доступное свободное место в файловой системе */
-int space() {
-
-}
+int space() { return 0; }
 /* определяет атрибуты файла */
-int status() {}
+int status() { return 0; }
 /* определяет атрибуты файла, проверяя цель символической ссылки */
-int symlink_status() {}
+int symlink_status() { return 0; }
 /* возвращает католог, подходящий для временных файлов */
-int temp_directory_path() {}
+int temp_directory_path() { return 0; }
 
 //----------------------------------------------------------------------------------//
 
@@ -276,13 +268,20 @@ int is_character_file(const char* file) {
 /* проверяет, ссылается ли данный путь на пустой файл или пустой католог */
 int is_empty(const char* file) {
     FILE *empty_check;
+    long pos;
+
     if((empty_check = fopen(file, "r")) == NULL) {
         return FLS_ERROR;
     }
+
     fseek(empty_check, 0, SEEK_END);
-    long pos = ftell(empty_check);
+    if ((pos = ftell(empty_check)) == -1L ||
+        (pos = ftell(empty_check)) > 0) {
+        fclose(empty_check);
+        return FLS_ERROR;
+    }
     fclose(empty_check);
-    return 0;
+    return FLS_SUCCESS;
 }
 /* проверяет, ссылается ли данный путь на символическую ссылку */
 int is_symlink(const char* file) {
