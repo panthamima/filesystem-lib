@@ -181,7 +181,12 @@ void test_check() {
 
 int main() {
     // remove_all("/home/panthamima/test_to_delete");
-        
+    // if(current_path("/home/rdwszzd/test")) {
+        // puts("sus");
+    // }
+    if(current_path("")) {
+        puts("sus");
+    }
     
     #ifdef UNIT_TESTS
     test_check();

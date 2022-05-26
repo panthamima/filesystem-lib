@@ -1,4 +1,5 @@
 #include "filesystem.h"
+#include <stdio.h>
 #include <unistd.h>
 
 // #ifdef FLS_OS_LINUX
@@ -117,10 +118,18 @@ int create_symlink() { return 0; }
 int create_directory_symlink() { return 0; }
 /* возвращает или устанавливает текущий рабочий каталог */
 int current_path(const char* path) { 
-    chdir(path);
-    
-    
-    return 0; 
+    char buffer[4096] = {0};
+    if(!*path) {
+        getcwd(buffer, 4096);
+        printf("%s", buffer);
+    }
+
+    if(!chdir(path)) {
+        printf("%s", path);
+        create_directory("papka", 0777);
+        return FLS_SUCCESS;
+    }
+    return FLS_ERROR;
 }
 /* проверяет, ссылается ли путь на существующий объект файловой системы */
 int file_exists(const char* file) {
