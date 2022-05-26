@@ -180,13 +180,11 @@ void test_check() {
 
 
 int main() {
-    // remove_all("/home/panthamima/test_to_delete");
+    remove_all("/home/rdwszzd/test");
     // if(current_path("/home/rdwszzd/test")) {
         // puts("sus");
     // }
-    if(current_path("/home/rdwszzd/test", 4096)) {
-        printf("asdasdas");
-    }
+
     
     #ifdef UNIT_TESTS
     test_check();

@@ -1,5 +1,7 @@
 #include "filesystem.h"
+#include <linux/limits.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 // #ifdef FLS_OS_LINUX
@@ -119,18 +121,16 @@ int create_directory_symlink() { return 0; }
 /* возвращает или устанавливает текущий рабочий каталог */
 int current_path(const char* path, const size_t path_len) { 
     char buffer[path_len];
-    if(!*path) {
+
+    if(!*path) { // if path[0] == '\0'
         getcwd(buffer, path_len);
         printf("%s\n", buffer);
         return FLS_SUCCESS;
     }
 
     if(chdir(path) == 0) {
-        printf("%s", path);
-        create_directory("papka", 0777);
         return FLS_SUCCESS;
     }
-    printf("errr");
     return FLS_ERROR;
 }
 /* проверяет, ссылается ли путь на существующий объект файловой системы */
@@ -168,10 +168,16 @@ int remove_all(const char* path) {
     struct dirent *dir;
     dir_s = opendir(path);
 
+    char         swap_path [PATH_MAX] = {0};
+    memcpy(swap_path, path, 4096);
+    current_path(swap_path, PATH_MAX);
+    
     while((dir = readdir(dir_s)) != NULL) {
         printf("%s\n", dir->d_name);
-        // remove_file(dir->d_name);
+        remove_file(dir->d_name);
     }
+    // ДОДЕЛАТЬ ИС ЕМПТИ
+
     // удалять все файлы проверять на существование директорий 
     // (зна4ит они не удалились) соответсвтенно заходить в нее 
     // удалять проверять если остались еще директории продолжить ,
