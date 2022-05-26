@@ -118,7 +118,7 @@ int create_symlink() { return 0; }
 int create_directory_symlink() { return 0; }
 /* возвращает или устанавливает текущий рабочий каталог */
 int current_path(const char* path) { 
-    char buffer[4096] = {0};
+    char buffer[] = {0};
     if(!*path) {
         getcwd(buffer, 4096);
         printf("%s", buffer);

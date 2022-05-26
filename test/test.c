@@ -166,9 +166,9 @@ void test_check() {
 /* remove_all --- NOT FINISHED */
 /* rename_file --- no-leaks */
 /* is_***_file func's --- no-leaks */
-/* is_empty --- NOT FINISHED */
-/* status_known */
-/*  */
+/* is_empty --- no-leaks */
+/* status_known --- no-leaks*/
+/* current_path --- NOT FINISHED*/
 /*  */
 /*  */
 /*  */
