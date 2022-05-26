@@ -184,8 +184,8 @@ int main() {
     // if(current_path("/home/rdwszzd/test")) {
         // puts("sus");
     // }
-    if(current_path("")) {
-        puts("sus");
+    if(current_path("/home/rdwszzd/test", 4096)) {
+        printf("asdasdas");
     }
     
     #ifdef UNIT_TESTS

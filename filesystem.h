@@ -104,7 +104,7 @@ int create_hard_link();
 int create_symlink();
 int create_directory_symlink();
 /* возвращяет или устанавливает текущий рабочий каталог */
-int current_path(const char* path);
+int current_path(const char* path, const size_t path_len);
 /* проверяет, ссылается ли путь на существующий объект файловой системы */
 int file_exists(const char* file);
 /* проверяет, ссылаются ли два пути на один и тот же объект файловой системы */

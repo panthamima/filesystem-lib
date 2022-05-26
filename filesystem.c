@@ -117,18 +117,20 @@ int create_hard_link() { return 0; }
 int create_symlink() { return 0; }
 int create_directory_symlink() { return 0; }
 /* возвращает или устанавливает текущий рабочий каталог */
-int current_path(const char* path) { 
-    char buffer[] = {0};
+int current_path(const char* path, const size_t path_len) { 
+    char buffer[path_len];
     if(!*path) {
-        getcwd(buffer, 4096);
-        printf("%s", buffer);
+        getcwd(buffer, path_len);
+        printf("%s\n", buffer);
+        return FLS_SUCCESS;
     }
 
-    if(!chdir(path)) {
+    if(chdir(path) == 0) {
         printf("%s", path);
         create_directory("papka", 0777);
         return FLS_SUCCESS;
     }
+    printf("errr");
     return FLS_ERROR;
 }
 /* проверяет, ссылается ли путь на существующий объект файловой системы */
