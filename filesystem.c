@@ -1,10 +1,5 @@
 #include "filesystem.h"
-#include <dirent.h>
-#include <fcntl.h>
-#include <linux/limits.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/stat.h>
+#include <unistd.h>
 
 // #ifdef FLS_OS_LINUX
 // char path_s[PATH_MAX];
@@ -121,7 +116,12 @@ int create_hard_link() { return 0; }
 int create_symlink() { return 0; }
 int create_directory_symlink() { return 0; }
 /* возвращает или устанавливает текущий рабочий каталог */
-int current_path() { return 0; }
+int current_path(const char* path) { 
+    chdir(path);
+    
+    
+    return 0; 
+}
 /* проверяет, ссылается ли путь на существующий объект файловой системы */
 int file_exists(const char* file) {
     FILE *stream;
@@ -136,7 +136,7 @@ int file_exists(const char* file) {
 int equivalent() { return 0; }
 /* возвращает размер файла */
 int file_size() { return 0; }
-/* возвращяет число жестких ссылок на конкретный файл */
+/* возвращaет число жестких ссылок на конкретный файл */
 int hard_link_count() { return 0; }
 /* получает или задает время последней модификации данных */
 int last_write_time() { return 0; }
@@ -159,7 +159,7 @@ int remove_all(const char* path) {
 
     while((dir = readdir(dir_s)) != NULL) {
         printf("%s\n", dir->d_name);
-        remove_file(dir->d_name);
+        // remove_file(dir->d_name);
     }
     // удалять все файлы проверять на существование директорий 
     // (зна4ит они не удалились) соответсвтенно заходить в нее 
