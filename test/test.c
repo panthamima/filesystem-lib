@@ -2,10 +2,9 @@
 #include <stdint.h>
 #include <stdio.h>
 
-// #define UNIT_TESTS 
+#define UNIT_TESTS 
 #ifdef UNIT_TESTS
 void test_is_status_file() {
-    uint8_t pass_count = 0;
     FILE* stream;
 
     char block_file[] = "/dev/sda1";
@@ -81,14 +80,8 @@ void test_directories_create() {
     if(create_directories("papka_in_koren/sad333a/a", 0741)) {
         pass_count++;
     }
-
-    if(pass_count == 7) {
-        printf("[test_directories_create] all tests(7-7) passed\n");
-        return;
-    }
-    else {
-        printf("[test_directories_create] test failed\n");
-    }
+    printf("[test_directories_create] (%d-7) passed", pass_count);
+    remove_file("directory");
 }
 
 void file_exists_test() {
@@ -103,17 +96,10 @@ void file_exists_test() {
     if(!file_exists("file_test")) {
         pass_count++;
     }
-    if(file_exists("../../Desktop")) {
+    if(file_exists("/usr/local")) {
         pass_count++;
     }
-
-    if(pass_count == 4) {
-        printf("[file_exists_test] all tests(4-4) passed\n");
-        return;
-    }
-    else {
-        printf("[file_exists_test] test failed\n");
-    }
+    printf("[file_exists_test] (%d-4) passed", pass_count);
 }
 
 void test_copy_file() {
@@ -124,13 +110,8 @@ void test_copy_file() {
     }
 
     remove_file("local_passwd");
-    if(pass_count == 1) {
-        printf("[test_copy_file] test passed\n");
-        return;
-    }
-    else {
-        printf("[test_copy_file] test failed\n");
-    }
+    printf("[test_copy_file] (%d-1) passed", pass_count);
+
 
 }
 
@@ -139,20 +120,38 @@ void test_remove_file_and_all() {
 }
 
 void test_is_empty() {
+    uint8_t pass_count = 0;
+
     if(!is_empty("filesystem.c")) {
-        printf("bebera\n");
+        pass_count++;
     }
-    if(is_empty("testfile")) {
-        printf("amoguesa\n");
+    if(!is_empty("testfile")) {
+        pass_count++;
     }
+    if(is_empty("/etc/")) {
+        pass_count++;
+    }
+    if(is_empty("test")) {
+        pass_count++;
+    }
+
+    create_directory("test_folder", 0744);
+    if(is_empty("test_folder")) {
+        remove_file("test_folder");
+        pass_count++;
+    }
+
+    printf("[test_is_empty] all tests(%d-5) passed", pass_count);
 }
 
 void test_check() {
     test_is_status_file();
     test_directories_create();
     file_exists_test();
-    test_copy_file();
+    test_is_empty();
 }
+
+
 
 #endif
 
@@ -180,14 +179,17 @@ void test_check() {
 
 
 int main() {
-    remove_all("/home/rdwszzd/test");
+    // remove_all("/home/rdwszzd/test");
     // if(current_path("/home/rdwszzd/test")) {
         // puts("sus");
     // }
+    is_empty("papka");
 
-    
+ 
     #ifdef UNIT_TESTS
-    test_check();
-    test_is_empty();
+    // test_check();
     #endif
+
+    // сделать функию мб validate_path которая будет
+    // обрабатывать путь перед любой функцией
 }

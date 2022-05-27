@@ -1,7 +1,9 @@
 #include "filesystem.h"
+#include <dirent.h>
 #include <linux/limits.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 // #ifdef FLS_OS_LINUX
@@ -220,8 +222,13 @@ int is_block_file(const char* file) {
 }
 /* проверяет, ссылается ли данный путь на католог */
 int is_directory(const char* file) {
-    if(open(file, O_DIRECTORY)) {
-        return FLS_SUCCESS;
+    struct stat state;
+    if(lstat(file, &state) < 0) {
+        return FLS_ERROR;
+    }
+
+    if(S_ISDIR(state.st_mode)) {
+        return DIRECTORY_FILE;
     }
     return FLS_ERROR;
 }
@@ -285,24 +292,44 @@ int is_character_file(const char* file) {
 /* проверяет, ссылается ли данный путь на пустой файл или пустой католог */
 int is_empty(const char* file) {
     FILE *empty_check;
-    long pos;
+    long pos = 0;
 
     if((empty_check = fopen(file, "r")) == NULL) {
         return FLS_ERROR;
     }
 
-    fseek(empty_check, 0, SEEK_END);
-    if ((pos = ftell(empty_check)) == -1L ||
-        (pos = ftell(empty_check)) > 0) {
+    if(!is_directory(file)) {
+        fseek(empty_check, 0, SEEK_END);
+        if ((pos = ftell(empty_check)) == -1L ||
+            (pos = ftell(empty_check)) > 0) {
+            fclose(empty_check);
+            return FLS_ERROR;
+        }
         fclose(empty_check);
-        return FLS_ERROR;
+        return FLS_SUCCESS;
     }
     fclose(empty_check);
-    return FLS_SUCCESS;
+    
+    DIR* dir;
+    struct dirent* dir_ent;
+    unsigned int files_count = 0;
+
+    dir = opendir(file);
+    while((dir_ent = readdir(dir)) != NULL) {
+        files_count++;
+    }
+    closedir(dir);
+
+    if(files_count <= 2) {
+        return FLS_SUCCESS;
+    }
+
+    return FLS_ERROR;
 }
 /* проверяет, ссылается ли данный путь на символическую ссылку */
 int is_symlink(const char* file) {
     struct stat state;
+
     if(lstat(file, &state) < 0) {
         return FLS_ERROR;
     }
@@ -310,9 +337,7 @@ int is_symlink(const char* file) {
     if(S_ISLNK(state.st_mode)) {
         return SYMLINK_FILE;
     }
-    #ifdef __DEBUG__
-    printf("symnot");
-    #endif
+
     return FLS_ERROR;
 }
 /* проверяет известно ли состояние файла */
