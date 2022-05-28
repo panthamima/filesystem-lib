@@ -126,7 +126,6 @@ int current_path(const char* path, const size_t path_len) {
 
     if(!*path) { // if path[0] == '\0'
         getcwd(buffer, path_len);
-        printf("%s\n", buffer);
         return FLS_SUCCESS;
     }
 

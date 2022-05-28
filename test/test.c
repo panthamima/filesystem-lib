@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#define UNIT_TESTS 
+// #define UNIT_TESTS 
 #ifdef UNIT_TESTS
 void test_is_status_file() {
     FILE* stream;
@@ -80,7 +80,7 @@ void test_directories_create() {
     if(create_directories("papka_in_koren/sad333a/a", 0741)) {
         pass_count++;
     }
-    printf("[test_directories_create] (%d-7) passed", pass_count);
+    printf("[test_directories_create] (%d-7) passed\n", pass_count);
     remove_file("directory");
 }
 
@@ -99,7 +99,7 @@ void file_exists_test() {
     if(file_exists("/usr/local")) {
         pass_count++;
     }
-    printf("[file_exists_test] (%d-4) passed", pass_count);
+    printf("[file_exists_test] (%d-4) passed\n", pass_count);
 }
 
 void test_copy_file() {
@@ -110,7 +110,7 @@ void test_copy_file() {
     }
 
     remove_file("local_passwd");
-    printf("[test_copy_file] (%d-1) passed", pass_count);
+    printf("[test_copy_file] (%d-1) passed\n", pass_count);
 
 
 }
@@ -128,10 +128,10 @@ void test_is_empty() {
     if(!is_empty("testfile")) {
         pass_count++;
     }
-    if(is_empty("/etc/")) {
+    if(!is_empty("/etc/")) {
         pass_count++;
     }
-    if(is_empty("test")) {
+    if(!is_empty("test")) {
         pass_count++;
     }
 
@@ -141,7 +141,32 @@ void test_is_empty() {
         pass_count++;
     }
 
-    printf("[test_is_empty] all tests(%d-5) passed", pass_count);
+    printf("[test_is_empty] tests(%d-5) passed\n", pass_count);
+}
+
+void test_current_path() {
+    uint8_t pass_count = 0;
+    int size = 128;
+
+    if(!current_path("/etc/asd44f4f", size)) {
+        pass_count++;
+    }
+    if(!current_path("../../folderfoolderfoo", size)) {
+        pass_count++;
+    }
+    if(current_path("/etc", size)) {
+        pass_count++;
+    }
+    if(current_path("", size)) {
+        pass_count++;
+    }
+    if(!current_path("foldeffoo", size)) {
+        pass_count++;
+    }
+    if(!current_path("test", size)) {
+        pass_count++;
+    }
+    printf("[test_current_path] tests(%d-6) passed\n", pass_count);
 }
 
 void test_check() {
@@ -149,6 +174,7 @@ void test_check() {
     test_directories_create();
     file_exists_test();
     test_is_empty();
+    test_current_path();
 }
 
 
@@ -167,7 +193,7 @@ void test_check() {
 /* is_***_file func's --- no-leaks */
 /* is_empty --- no-leaks */
 /* status_known --- no-leaks*/
-/* current_path --- NOT FINISHED*/
+/* current_path --- possible no-leaks*/
 /*  */
 /*  */
 /*  */
@@ -180,14 +206,10 @@ void test_check() {
 
 int main() {
     // remove_all("/home/rdwszzd/test");
-    // if(current_path("/home/rdwszzd/test")) {
-        // puts("sus");
-    // }
-    is_empty("papka");
+    
 
- 
     #ifdef UNIT_TESTS
-    // test_check();
+    test_check();
     #endif
 
     // сделать функию мб validate_path которая будет
