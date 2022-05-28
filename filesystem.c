@@ -177,7 +177,9 @@ int remove_all(const char* path) {
         printf("%s\n", dir->d_name);
         remove_file(dir->d_name);
     }
-    
+    if(!is_empty(path)) {
+        
+    }
 
     // сделать рекурсию основанную на is_empty если директория пуста
     // выйти на уровень ниже и продолжить удаление

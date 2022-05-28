@@ -188,13 +188,13 @@ void test_check() {
 /* create_directories --- no-leaks */
 /* file_exists --- no-leaks */
 /* remove_file --- no-leaks */
-/* remove_all --- NOT FINISHED */
 /* rename_file --- no-leaks */
 /* is_***_file func's --- no-leaks */
 /* is_empty --- no-leaks */
 /* status_known --- no-leaks*/
 /* current_path --- possible no-leaks*/
 /*  */
+/* remove_all --- NOT FINISHED */
 /*  */
 /*  */
 /*  */
