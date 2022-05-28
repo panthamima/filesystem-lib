@@ -169,7 +169,7 @@ int remove_all(const char* path) {
     struct dirent *dir;
     dir_s = opendir(path);
 
-    char         swap_path [PATH_MAX] = {0};
+    char swap_path [PATH_MAX] = {0};
     memcpy(swap_path, path, 4096);
     current_path(swap_path, PATH_MAX);
     
@@ -177,7 +177,11 @@ int remove_all(const char* path) {
         printf("%s\n", dir->d_name);
         remove_file(dir->d_name);
     }
-    // ДОДЕЛАТЬ ИС ЕМПТИ
+    
+
+    // сделать рекурсию основанную на is_empty если директория пуста
+    // выйти на уровень ниже и продолжить удаление
+    // если уровень == изначальному пути вернуть FLS_SUSCCSE
 
     // удалять все файлы проверять на существование директорий 
     // (зна4ит они не удалились) соответсвтенно заходить в нее 
