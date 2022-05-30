@@ -1,6 +1,7 @@
 #include "../filesystem.h"
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 // #define UNIT_TESTS 
 #ifdef UNIT_TESTS
@@ -206,8 +207,12 @@ void test_check() {
 
 int main() {
     // remove_all("/home/rdwszzd/test");
-    
-
+    char *bebe = NULL;
+    for(int i =0; i < 1000000; i++) {
+        bebe = directory_iterator("/home/panthamima/work/filesystem-lib/test");
+        // printf("%ld %s\n",sizeof(bebe), bebe);
+    }
+    // directory_iterator("test");
     #ifdef UNIT_TESTS
     test_check();
     #endif

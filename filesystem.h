@@ -62,7 +62,7 @@ int filesystem_error();
 /* запись католога */
 int directory_entry();
 /* итератор содержимого католога */
-int directory_iterator();
+char* directory_iterator(const char* path);
 /* итератор содержимого католога и его подкатологов */
 int recursive_directory_iterator();
 /* представляет тип и разрешения файла */
@@ -101,7 +101,7 @@ int create_directories(char* path, const int roots);
 /* создает жесткую ссылку */
 int create_hard_link();
 /* создает символическую ссылку */
-int create_symlink();
+int create_symlink(const char* from, const char* to);
 int create_directory_symlink();
 /* возвращяет или устанавливает текущий рабочий каталог */
 int current_path(const char* path, const size_t path_len);

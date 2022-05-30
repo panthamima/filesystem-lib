@@ -1,6 +1,7 @@
 #include "filesystem.h"
 #include <dirent.h>
 #include <linux/limits.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -12,6 +13,10 @@
 // char path[MAX_PATH];
 // #endif//fls_os_linux
 
+typedef struct {
+    char a;
+}ctx ;
+
 /* представляет собой путь */
 int path_fls() { return 0; }
 /* исключение, вызванное ошибками файловой системы. */
@@ -19,7 +24,26 @@ int filesystem_error() { return 0; }
 /* запись католога */
 int directory_entry() { return 0; }
 /* итератор содержимого католога */
-int directory_iterator() { return 0; }
+char* directory_iterator(const char* path) {
+    DIR *dir_iter;
+    struct dirent *dir;
+    dir_iter = opendir(path);
+    int i = 0;
+    static uint8_t count = 0;
+
+    count++;
+    while((dir = readdir(dir_iter)) != NULL) {
+        i++;
+        if(i == count) {
+            closedir(dir_iter);
+            printf("%d %d %s\n", i, count, dir->d_name);
+            return dir->d_name;
+        }
+    }
+    count = 0; // ПЕРЕДАВАТЬ УКАЗАТЕЛИ НА ДИРЕКТОРИЮ В ФУНКЦИЮ ЧЧТОБЫ ОПТИМИЗИРОВАТЬ ПРОЦЕСС
+    closedir(dir_iter);
+    return FLS_ERROR;
+}
 /* итератор содержимого католога и его подкатологов */
 int recursive_directory_iterator() { return 0; }
 /* представляет тип и разрешения файла */
@@ -39,7 +63,7 @@ int directory_options() { return 0; }
 /* опции для итерации содержимого католога */
 int file_time_type() { return 0; }
 
-//----------------------------------------------------------------------------------//
+/*---------------------------------------------------------------------------------------------------*/
 
 /* составляет абсолютный путь */
 int absolute_path() { return 0; }
@@ -118,7 +142,12 @@ int create_directories(char* path, const int roots) {
 /* создает жесткую ссылку */
 int create_hard_link() { return 0; }
 /* создает символическую ссылку */
-int create_symlink() { return 0; }
+int create_symlink(const char* from, const char* to) {
+    if(!symlink(from, to)) {
+        return FLS_SUCCESS;
+    }
+    return FLS_ERROR;
+}
 int create_directory_symlink() { return 0; }
 /* возвращает или устанавливает текущий рабочий каталог */
 int current_path(const char* path, const size_t path_len) { 
@@ -211,7 +240,7 @@ int symlink_status() { return 0; }
 /* возвращает католог, подходящий для временных файлов */
 int temp_directory_path() { return 0; }
 
-//----------------------------------------------------------------------------------//
+/*---------------------------------------------------------------------------------------------------*/
 
 /* проверяет, ссылается ли данный путь на блочное устройство */
 int is_block_file(const char* file) {
