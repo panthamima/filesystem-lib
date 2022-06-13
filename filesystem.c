@@ -13,10 +13,6 @@
 // char path[MAX_PATH];
 // #endif//fls_os_linux
 
-typedef struct {
-    char a;
-}ctx ;
-
 /* представляет собой путь */
 int path_fls() { return 0; }
 /* исключение, вызванное ошибками файловой системы. */
@@ -36,11 +32,11 @@ char* directory_iterator(const char* path) {
         i++;
         if(i == count) {
             closedir(dir_iter);
-            printf("%d %d %s\n", i, count, dir->d_name);
             return dir->d_name;
         }
     }
-    count = 0; // ПЕРЕДАВАТЬ УКАЗАТЕЛИ НА ДИРЕКТОРИЮ В ФУНКЦИЮ ЧЧТОБЫ ОПТИМИЗИРОВАТЬ ПРОЦЕСС
+
+    count = 0;
     closedir(dir_iter);
     return FLS_ERROR;
 }

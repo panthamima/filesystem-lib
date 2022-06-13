@@ -208,8 +208,8 @@ void test_check() {
 int main() {
     // remove_all("/home/rdwszzd/test");
     char *bebe = NULL;
-    for(int i =0; i < 1000000; i++) {
-        bebe = directory_iterator("/home/panthamima/work/filesystem-lib/test");
+    for(int i =0; i < 10000; i++) {
+        bebe = directory_iterator("/home/rdwszzd/new-work/filesystem-lib/test");
         // printf("%ld %s\n",sizeof(bebe), bebe);
     }
     // directory_iterator("test");
