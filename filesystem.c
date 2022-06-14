@@ -7,16 +7,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-// #ifdef FLS_OS_LINUX
-// char path_s[PATH_MAX];
-// #elif  FLS_OS_WINDOWS
-// char path[MAX_PATH];
-// #endif//fls_os_linux
-
-typedef struct {
-    char a;
-}ctx ;
-
 /* представляет собой путь */
 int path_fls() { return 0; }
 /* исключение, вызванное ошибками файловой системы. */
@@ -25,27 +15,35 @@ int filesystem_error() { return 0; }
 int directory_entry() { return 0; }
 /* итератор содержимого католога */
 char* directory_iterator(const char* path) {
+    int i = 0;
+    static uint8_t count = 0;
     DIR *dir_iter;
     struct dirent *dir;
     dir_iter = opendir(path);
-    int i = 0;
-    static uint8_t count = 0;
 
-    count++;
+    ++count;
     while((dir = readdir(dir_iter)) != NULL) {
-        i++;
+        ++i;
+
+        if(!strcmp(dir->d_name, ".") || (!strcmp(dir->d_name, ".."))) {
+            // printf("%s %d\n", dir->d_name, count);
+            ++count;
+        }
+
         if(i == count) {
             closedir(dir_iter);
-            printf("%d %d %s\n", i, count, dir->d_name);
             return dir->d_name;
         }
     }
-    count = 0; // ПЕРЕДАВАТЬ УКАЗАТЕЛИ НА ДИРЕКТОРИЮ В ФУНКЦИЮ ЧЧТОБЫ ОПТИМИЗИРОВАТЬ ПРОЦЕСС
     closedir(dir_iter);
     return FLS_ERROR;
 }
 /* итератор содержимого католога и его подкатологов */
-int recursive_directory_iterator() { return 0; }
+int recursive_directory_iterator() { 
+
+
+    return 0; 
+}
 /* представляет тип и разрешения файла */
 int file_status() { return 0; }
 /* информация о свободном и доступном пространстве в файловой системе */
