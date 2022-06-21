@@ -34,8 +34,8 @@ int directory_iterator(const char* path, char* buffer) {
             // if((!strcmp(dir->d_name, ".")) || (!strcmp(dir->d_name, ".."))) {
                 // continue;
             // }else {
-                memcpy(buffer, dir->d_name, sizeof(dir->d_name));
-                return FLS_SUCCESS;
+            memcpy(buffer, dir->d_name, sizeof(dir->d_name));
+            return FLS_SUCCESS;
             // }
         }
     }
