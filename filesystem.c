@@ -20,7 +20,7 @@ int filesystem_error() { return 0; }
 /* запись католога */
 int directory_entry() { return 0; }
 /* итератор содержимого католога */
-char* directory_iterator(const char* path) {
+char* directory_iterator(const char* path, char* buffer) {
     DIR *dir_iter;
     struct dirent *dir;
     dir_iter = opendir(path);
@@ -32,11 +32,19 @@ char* directory_iterator(const char* path) {
         i++;
         if(i == count) {
             closedir(dir_iter);
-            return dir->d_name;
+            buffer = dir->d_name;
+            return 0;
         }
     }
-
     count = 0;
+
+    // #define debug
+    #ifdef debug
+    while((dir = readdir(dir_iter))!= NULL) {
+        printf("%s\n", dir->d_name);
+    }
+    #endif
+
     closedir(dir_iter);
     return FLS_ERROR;
 }

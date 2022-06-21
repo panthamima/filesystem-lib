@@ -207,10 +207,11 @@ void test_check() {
 
 int main() {
     // remove_all("/home/rdwszzd/test");
+    char buffer[256] = {0};
     char *bebe = NULL;
-    for(int i =0; i < 10000; i++) {
-        bebe = directory_iterator("/home/rdwszzd/new-work/filesystem-lib/test");
-        // printf("%ld %s\n",sizeof(bebe), bebe);
+    for(int i = 0; i < 9; i++) {
+        directory_iterator(".", buffer);
+        printf("%ld %s\n",sizeof(buffer), buffer);
     }
     // directory_iterator("test");
     #ifdef UNIT_TESTS
