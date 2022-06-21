@@ -55,6 +55,9 @@
 #define APPEND "a"
 #define TRUNC "w"
 
+#define GET_FILE 1
+#define GET_PATH 2
+
 /* представляет собой путь */
 int path_fls();
 /* исключение, вызванное ошибками файловой системы. */

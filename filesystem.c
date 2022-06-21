@@ -7,12 +7,15 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+<<<<<<< HEAD
 // #ifdef FLS_OS_LINUX
 // char path_s[PATH_MAX];
 // #elif  FLS_OS_WINDOWS
 // char path[MAX_PATH];
 // #endif//fls_os_linux
 
+=======
+>>>>>>> 572271ab530629716d16fc8fd68abd62b7ceb15a
 /* представляет собой путь */
 int path_fls() { return 0; }
 /* исключение, вызванное ошибками файловой системы. */
@@ -20,18 +23,29 @@ int filesystem_error() { return 0; }
 /* запись католога */
 int directory_entry() { return 0; }
 /* итератор содержимого католога */
+<<<<<<< HEAD
 char* directory_iterator(const char* path, char* buffer) {
+=======
+char* directory_iterator(const char* path) {
+    int i = 0;
+    static uint8_t count = 0;
+>>>>>>> 572271ab530629716d16fc8fd68abd62b7ceb15a
     DIR *dir_iter;
     struct dirent *dir;
     dir_iter = opendir(path);
-    int i = 0;
-    static uint8_t count = 0;
 
-    count++;
+    ++count;
     while((dir = readdir(dir_iter)) != NULL) {
-        i++;
+        ++i;
+
+        if(!strcmp(dir->d_name, ".") || (!strcmp(dir->d_name, ".."))) {
+            // printf("%s %d\n", dir->d_name, count);
+            ++count;
+        }
+
         if(i == count) {
             closedir(dir_iter);
+<<<<<<< HEAD
             buffer = dir->d_name;
             return 0;
         }
@@ -45,11 +59,20 @@ char* directory_iterator(const char* path, char* buffer) {
     }
     #endif
 
+=======
+            return dir->d_name;
+        }
+    }
+>>>>>>> 572271ab530629716d16fc8fd68abd62b7ceb15a
     closedir(dir_iter);
     return FLS_ERROR;
 }
 /* итератор содержимого католога и его подкатологов */
-int recursive_directory_iterator() { return 0; }
+int recursive_directory_iterator() { 
+
+
+    return 0; 
+}
 /* представляет тип и разрешения файла */
 int file_status() { return 0; }
 /* информация о свободном и доступном пространстве в файловой системе */

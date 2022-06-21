@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // #define UNIT_TESTS 
 #ifdef UNIT_TESTS
@@ -194,7 +195,7 @@ void test_check() {
 /* is_empty --- no-leaks */
 /* status_known --- no-leaks*/
 /* current_path --- possible no-leaks*/
-/*  */
+/* directory_iterator ---  */
 /* remove_all --- NOT FINISHED */
 /*  */
 /*  */
@@ -207,6 +208,7 @@ void test_check() {
 
 int main() {
     // remove_all("/home/rdwszzd/test");
+<<<<<<< HEAD
     char buffer[256] = {0};
     char *bebe = NULL;
     for(int i = 0; i < 9; i++) {
@@ -217,6 +219,16 @@ int main() {
     #ifdef UNIT_TESTS
     test_check();
     #endif
+=======
+    
+    char *bebe = NULL;
+    bebe = malloc(sizeof(char)*256);
+    char path[256] = ".";
+    while((bebe = directory_iterator(path)) != 0) {
+        printf("%s\n", bebe);
+    }
+    free(bebe);
+>>>>>>> 572271ab530629716d16fc8fd68abd62b7ceb15a
 
     // сделать функию мб validate_path которая будет
     // обрабатывать путь перед любой функцией
