@@ -65,7 +65,7 @@ int filesystem_error();
 /* запись католога */
 int directory_entry();
 /* итератор содержимого католога */
-char* directory_iterator(const char* path, char* buffer);
+int directory_iterator(const char* path, char* buffer);
 /* итератор содержимого католога и его подкатологов */
 int recursive_directory_iterator();
 /* представляет тип и разрешения файла */

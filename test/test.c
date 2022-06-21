@@ -207,29 +207,12 @@ void test_check() {
 
 
 int main() {
-    // remove_all("/home/rdwszzd/test");
-<<<<<<< HEAD
     char buffer[256] = {0};
-    char *bebe = NULL;
-    for(int i = 0; i < 9; i++) {
-        directory_iterator(".", buffer);
-        printf("%ld %s\n",sizeof(buffer), buffer);
-    }
-    // directory_iterator("test");
-    #ifdef UNIT_TESTS
-    test_check();
-    #endif
-=======
-    
-    char *bebe = NULL;
-    bebe = malloc(sizeof(char)*256);
-    char path[256] = ".";
-    while((bebe = directory_iterator(path)) != 0) {
-        printf("%s\n", bebe);
-    }
-    free(bebe);
->>>>>>> 572271ab530629716d16fc8fd68abd62b7ceb15a
 
+    for(int i = 0; i < 9; ++i) {
+        directory_iterator(".", buffer);
+        printf("%s\n", buffer);
+    }
     // сделать функию мб validate_path которая будет
     // обрабатывать путь перед любой функцией
 }
