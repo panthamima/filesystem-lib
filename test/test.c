@@ -207,12 +207,9 @@ void test_check() {
 
 
 int main() {
-    char buffer[256] = {0};
-
-    for(int i = 0; i < 9; ++i) {
-        directory_iterator(".", buffer);
-        printf("%s\n", buffer);
-    }
+    // char buffer[256] = {0};
+    char path[] = "/home/rdwszzd/test/";
+    remove_all(path);
     // сделать функию мб validate_path которая будет
     // обрабатывать путь перед любой функцией
 }

@@ -3,6 +3,7 @@
 #include <linux/limits.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -200,22 +201,39 @@ int remove_file (const char* file) {
     return FLS_ERROR;
 }
 /* рекурсивно удаляет файл или католог и все его содержимое */
-int remove_all(const char* path) {
+int remove_all(char* path) {
     DIR *dir_s;
     struct dirent *dir;
     dir_s = opendir(path);
 
-    char swap_path [PATH_MAX] = {0};
-    memcpy(swap_path, path, 4096);
-    current_path(swap_path, PATH_MAX);
-    
+    current_path(path, sizeof(path));
+    char* tmp_path = (char*)malloc(strlen(path)+256);
     while((dir = readdir(dir_s)) != NULL) {
-        printf("%s\n", dir->d_name);
-        remove_file(dir->d_name);
-    }
-    if(!is_empty(path)) {
+        strcpy(tmp_path, path);
+        if((!strcmp(tmp_path, ".") || (!strcmp(tmp_path, "..")))) {
+            tmp_path = "";
+        }
+        if(is_directory(tmp_path)) {
+            printf("isdir -  %s\n", tmp_path);
+            strcat(tmp_path, dir->d_name);
+            strcat(tmp_path, "/");
+            if(is_empty(tmp_path)) {
+                printf("isempty -  %s\n", tmp_path);
+                break;
+            }
+            printf("recur -  %s\n", tmp_path);
+            // remove_all(tmp_path);
+        }
+        printf("remove -  %s\n", tmp_path);
+        // remove(tmp_path);
         
     }
+
+    free(tmp_path);
+    if(!is_empty(path)) {
+        return FLS_SUCCESS;
+    }
+    remove_all(path);
 
     // сделать рекурсию основанную на is_empty если директория пуста
     // выйти на уровень ниже и продолжить удаление

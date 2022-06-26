@@ -42,6 +42,7 @@
 
 //--general libraries--//
 #include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 /*---------------------------------------------------------------------------------------------------*/
@@ -125,7 +126,7 @@ int read_symlink();
 /* удаляет файл или пустой католог */
 int remove_file(const char* file);
 /* рекурсивно удаляет файл или католог и все его содержимое */
-int remove_all(const char* path);
+int remove_all(char* path);
 /* перемещает или переименовывает файл или католог */
 int rename_file(const char* old, const char* );
 /* изменяет размер обычного файла путем усечения или заполнением нулями */
